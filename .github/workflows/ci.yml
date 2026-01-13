@@ -26,5 +26,5 @@ jobs:
 
       - name: Run tests
         run: |
-          export PYTHONPATH=$PYTHONPATH:.
-          pytest -q
+          python -c "import sys; print(sys.path)"
+          PYTHONPATH=. pytest -q

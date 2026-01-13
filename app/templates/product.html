@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="bg-white border rounded-3 shadow-sm p-4">
+        <div class="d-flex align-items-start justify-content-between gap-3">
+          <div>
+            <div class="text-muted small mb-1">{{ product.category.name }}</div>
+            <h2 class="fw-semibold mb-2">{{ product.name }}</h2>
+          </div>
+          <span class="badge text-bg-primary align-self-start">В наличии</span>
+        </div>
+
+        <p class="text-muted mb-0">
+          {{ product.description or "Описание отсутствует." }}
+        </p>
+      </div>
+
+      <div class="mt-3 bg-white border rounded-3 shadow-sm p-4">
+        <h5 class="fw-semibold mb-3">Характеристики</h5>
+        <div class="row g-2">
+          <div class="col-sm-6">
+            <div class="border rounded-3 p-3 bg-light">
+              <div class="text-muted small">Категория</div>
+              <div class="fw-semibold">{{ product.category.name }}</div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="border rounded-3 p-3 bg-light">
+              <div class="text-muted small">Статус</div>
+              <div class="fw-semibold">Активен</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 small text-muted">
+          Изображения и логотипы используются в виде встроенной графики (SVG),
+          без отдельной загрузки файлов.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="bg-white border rounded-3 shadow-sm p-4 sticky-top" style="top: 16px;">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div
+            class="rounded-3 d-flex align-items-center justify-content-center"
+            style="width: 56px; height: 56px; background: #111;"
+          >
+            <svg viewBox="0 0 64 64" width="34" height="34" aria-hidden="true">
+              <circle cx="32" cy="32" r="24" fill="#ffffff" opacity="0.95"></circle>
+              <path d="M32 16l9 6-4 11H27l-4-11 9-6z" fill="#111"></path>
+              <path d="M23 33l9 6-4 11-11-6 6-11z" fill="#111"></path>
+              <path d="M41 33l6 11-11 6-4-11 9-6z" fill="#111"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="fw-semibold">Покупка</div>
+            <div class="text-muted small">Добавление товара в корзину</div>
+          </div>
+        </div>
+
+        <div class="display-6 fw-semibold mb-3">
+          {{ "%.2f"|format(product.price) }} ₽
+        </div>
+
+        <form
+          method="post"
+          action="{{ url_for('shop.cart_add', product_id=product.id) }}"
+          class="d-flex gap-2 mb-3"
+        >
+          <input
+            type="number"
+            name="qty"
+            class="form-control"
+            value="1"
+            min="1"
+          />
+          <button type="submit" class="btn btn-primary">
+            В корзину
+          </button>
+        </form>
+
+        <div class="d-grid gap-2">
+          <a class="btn btn-outline-secondary" href="{{ url_for('shop.catalog') }}">
+            ← Вернуться в каталог
+          </a>
+          <a class="btn btn-outline-dark" href="{{ url_for('shop.cart_view') }}">
+            Открыть корзину
+          </a>
+        </div>
+
+        <div class="mt-3 small text-muted">
+          Итоговая стоимость рассчитывается при оформлении заказа.
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

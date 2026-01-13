@@ -1,0 +1,50 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}
+
+.card {
+  border-radius: 16px;
+}
+
+.rounded-3 {
+  border-radius: 16px !important;
+}
+
+.navbar-brand svg {
+  display: block;
+}
+
+.table > :not(caption) > * > * {
+  vertical-align: middle;
+}
+
+.alert {
+  border-radius: 14px;
+}
+
+.btn {
+  border-radius: 12px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 12px;
+}
+
+footer {
+  margin-top: 24px;
+}
+
+.sticky-top {
+  z-index: 1020;
+}

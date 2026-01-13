@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex flex-wrap align-items-endend justify-content-between gap-2 mb-3">
+    <div>
+      <h2 class="fw-semibold mb-0">Административная панель</h2>
+      <div class="text-muted">Управление товарами интернет-магазина</div>
+    </div>
+    <a class="btn btn-outline-secondary" href="{{ url_for('shop.catalog') }}">
+      Перейти в каталог
+    </a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="bg-white border rounded-3 shadow-sm p-4">
+        <h5 class="fw-semibold mb-3">Добавление товара</h5>
+
+        <form method="post" class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Название</label>
+            <input type="text" name="name" class="form-control" required />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Slug</label>
+            <input
+              type="text"
+              name="slug"
+              class="form-control"
+              placeholder="Оставьте пустым для автогенерации"
+            />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Описание</label>
+            <textarea
+              name="description"
+              rows="3"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Цена</label>
+            <input type="text" name="price" class="form-control" required />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Количество</label>
+            <input
+              type="number"
+              name="stock_qty"
+              class="form-control"
+              value="0"
+              min="0"
+            />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Категория</label>
+            <select name="category_id" class="form-select" required>
+              <option value="">Выберите категорию</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-12 d-grid">
+            <button type="submit" class="btn btn-primary">
+              Добавить товар
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="bg-white border rounded-3 shadow-sm">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Название</th>
+                <th>Категория</th>
+                <th class="text-end">Цена</th>
+                <th class="text-center">Статус</th>
+                <th class="text-end">Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+                <tr>
+                  <td>
+                    <div class="fw-semibold">{{ product.name }}</div>
+                    <div class="text-muted small">{{ product.slug }}</div>
+                  </td>
+                  <td>{{ product.category.name }}</td>
+                  <td class="text-end">
+                    {{ "%.2f"|format(product.price) }} ₽
+                  </td>
+                  <td class="text-center">
+                    {% if product.is_active %}
+                      <span class="badge text-bg-success">Активен</span>
+                    {% else %}
+                      <span class="badge text-bg-secondary">Скрыт</span>
+                    {% endif %}
+                  </td>
+                  <td class="text-end">
+                    <div class="d-flex justify-content-end gap-1">
+                      <form
+                        method="post"
+                        action="{{ url_for('admin.product_toggle', product_id=product.id) }}"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-sm btn-outline-warning"
+                        >
+                          Статус
+                        </button>
+                      </form>
+
+                      <form
+                        method="post"
+                        action="{{ url_for('admin.product_delete', product_id=product.id) }}"
+                        onsubmit="return confirm('Удалить товар?');"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-sm btn-outline-danger"
+                        >
+                          Удалить
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5" class="text-center text-muted">
+                    Товары отсутствуют.
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

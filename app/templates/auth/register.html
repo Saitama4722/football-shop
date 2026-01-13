@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="bg-white border rounded-3 shadow-sm p-4">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div
+            class="rounded-3 d-flex align-items-center justify-content-center"
+            style="width: 48px; height: 48px; background: #0d6efd;"
+          >
+            <svg viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
+              <circle cx="32" cy="32" r="24" fill="#ffffff" opacity="0.95"></circle>
+              <path d="M32 16l9 6-4 11H27l-4-11 9-6z" fill="#111"></path>
+              <path d="M23 33l9 6-4 11-11-6 6-11z" fill="#111"></path>
+              <path d="M41 33l6 11-11 6-4-11 9-6z" fill="#111"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="fw-semibold mb-0">Регистрация</h2>
+            <div class="text-muted">Создание учетной записи</div>
+          </div>
+        </div>
+
+        <form method="post" class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Имя</label>
+            <input type="text" name="full_name" class="form-control" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Пароль</label>
+            <input type="password" name="password" class="form-control" required />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Повтор пароля</label>
+            <input type="password" name="password2" class="form-control" required />
+          </div>
+
+          <div class="col-12 d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">
+              Зарегистрироваться
+            </button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('auth.login') }}">
+              Уже есть аккаунт
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <div class="text-center mt-3 small text-muted">
+        Данные используются только для работы учебного проекта.
+      </div>
+    </div>
+  </div>
+{% endblock %}
